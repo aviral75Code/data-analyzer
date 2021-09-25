@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'self.aviral.project'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile project(':share')
+    implementation group: 'com.google.inject', name: 'guice', version: '4.2.0'
+}
+
+task run (type: JavaExec, dependsOn: classes){
+    if(project.hasProperty('arg')){
+        args(arg.split(','))
+    }
+
+    main = "self.aviral.project.Server"
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = [
+            "-Dkey=value"
+    ]
+    standardInput = System.in
+}
